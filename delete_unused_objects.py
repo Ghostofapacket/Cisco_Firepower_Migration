@@ -7,24 +7,22 @@
 #
 # Use script at you own risk, and no warranties are inferred or granted.
 #
-# Originally from here: <<GITHUBURL>>
+# Originally written by jwilliams9999: https://github.com/jwilliams9999/fmcapi/blob/master/fmc-obj-del.py	#
 #
 # Modified to be more interactive and python3 compatable by Matt Iggo
-# Github URL:
+# Github URL: https://github.com/MattIggo/Cisco_Firepower_Migration/
 #
 # =====================================================================================================================
+
 import requests
 import json
 import requests
 import logging
 import sys
-import getpass3
-#from msvcrt import *
-#from msvcrt import getch
 import msvcrt
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from colorama import init,Fore,Back,Style
 init()
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 logging.basicConfig(filename='response.log', level=logging.DEBUG)
@@ -75,7 +73,7 @@ print("=      Cisco Firepower API           =")
 print("=      Object Delete script          =")
 print("=  Will only delete unused objects   =")
 print('=     ' + Fore.LIGHTRED_EX + 'Use at your own Risk!'+ Fore.WHITE+'          =')
-print("=       Version: 1.0.0               =")
+print("=       Version: 1.0.1               =")
 print("=      Updated by Matt Iggo          =")
 print("======================================")
 
