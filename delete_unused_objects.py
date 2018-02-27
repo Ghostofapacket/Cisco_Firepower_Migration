@@ -7,7 +7,7 @@
 #
 # Use script at you own risk, and no warranties are inferred or granted.
 #
-# Originally written by jwilliams9999: https://github.com/jwilliams9999/fmcapi/blob/master/fmc-obj-del.py	#
+# Originally written by jwilliams9999: https://github.com/jwilliams9999/fmcapi/blob/master/fmc-obj-del.py
 #
 # Modified to be more interactive and python3 compatable by Matt Iggo
 # Github URL: https://github.com/MattIggo/Cisco_Firepower_Migration/
@@ -30,10 +30,7 @@ requests_log = logging.getLogger("requests.packages.urllib3")
 requests_log.setLevel(logging.INFO)
 requests_log.propagate = True
 
-
-
 set_echo = '#' # Setting the symbol for encryption which will going to be displayed.
-
 
 def getpass(label):
     print(label, end='')
@@ -73,7 +70,7 @@ print("=      Cisco Firepower API           =")
 print("=      Object Delete script          =")
 print("=  Will only delete unused objects   =")
 print('=     ' + Fore.LIGHTRED_EX + 'Use at your own Risk!'+ Fore.WHITE+'          =')
-print("=       Version: 1.0.1               =")
+print("=       Version: 1.0.2               =")
 print("=      Updated by Matt Iggo          =")
 print("======================================")
 
@@ -207,10 +204,14 @@ def delobj(obj):
         # Sends a delete http for all network objects, but only deletes unused objects
 
         if netdel.status_code != 401:
-            # print id['links']['self']
             url = id['links']['self']
             netdel = requests.request("DELETE", url, headers=headers, verify=False)
-            print(id['name'], netdel)
+            #print(id['name'], netdel)
+            if str(netdel) == "<Response [200]>":
+                print(id['name'], "object deletion " + Fore.LIGHTGREEN_EX + "success!" + Style.RESET_ALL)
+            else:
+                print(id['name'], "object deletion " + Fore.LIGHTRED_EX + "FAILURE!", Fore.LIGHTCYAN_EX + str(netdel) +
+                      Style.RESET_ALL)
             logging.info("%s Response: Status code: %d" % (id['name'], netdel.status_code))
 
         else:
