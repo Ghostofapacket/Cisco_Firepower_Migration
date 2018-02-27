@@ -7,11 +7,10 @@
 #
 # Use script at you own risk, and no warranties are inferred or granted.
 #
-# Originally written by jwilliams9999: https://github.com/jwilliams9999/fmcapi/blob/master/fmc-obj-del.py
+# Originally from here: <<GITHUBURL>>
 #
-# Modified to be more interactive and python3 compatable by Matt Iggo as part of the Firepower Migration Toolset
-#
-# Github URL: https://github.com/MattIggo/Cisco_Firepower_Migration/
+# Modified to be more interactive and python3 compatable by Matt Iggo
+# Github URL:
 #
 # =====================================================================================================================
 import requests
@@ -20,8 +19,11 @@ import requests
 import logging
 import sys
 import getpass3
+#from msvcrt import *
+#from msvcrt import getch
 import msvcrt
-import colorama
+from colorama import init,Fore,Back,Style
+init()
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -36,7 +38,7 @@ set_echo = '#' # Setting the symbol for encryption which will going to be displa
 
 
 def getpass(label):
-    print(label)
+    print(label, end='')
     passwor = ''
     while True:
         inp = msvcrt.getch()
@@ -58,17 +60,21 @@ def getpass(label):
             raise EOFError
         else:
             sys.stdout.write(set_echo)
+            #print(inp)
+            #print(bytes.decode(inp))
             convertedkeypress = bytes.decode(inp)
             passwor += convertedkeypress
-    print("\n",)
+    #print("\n",)
     return passwor
 
 # Begin user presentation / Input
+#Make the output bright!
+print(Style.BRIGHT)
 print("======================================")
 print("=      Cisco Firepower API           =")
 print("=      Object Delete script          =")
 print("=  Will only delete unused objects   =")
-print("=     Use at your own Risk!          =")
+print('=     ' + Fore.LIGHTRED_EX + 'Use at your own Risk!'+ Fore.WHITE+'          =')
 print("=       Version: 1.0.0               =")
 print("=      Updated by Matt Iggo          =")
 print("======================================")
@@ -77,6 +83,7 @@ print("======================================")
 user1 = input("Enter your FMC api username: ")
 #pass1 = input("Enter your FMC password: ")
 pass1 = getpass("Enter your FMC password: ")
+print("\n")
 ipaddr = input("Enter the IP address of Firepower Management Center: ")
 print("Enter the object type to delete?")
 print("1. networks")
@@ -86,7 +93,6 @@ print("4. network groups")
 print("5. port groups")
 print("6. address ranges")
 #print("Q to quit")
-
 while True:
     try:
         question = int(input('Options (1,2,3,4,5,6):'))
@@ -127,6 +133,7 @@ while True:
     else:
         print('That\'s not an option!')
         continue
+print(Style.RESET_ALL)
 
 url = "https://%s/api/fmc_platform/v1/auth/generatetoken" % ipaddr
 
